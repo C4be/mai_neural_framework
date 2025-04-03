@@ -130,6 +130,15 @@ class DataSetLoader:
 
 ####################################  START ActivationFunction ####################################
 class ActivationFunction:
+    class Linear:
+        @staticmethod
+        def forward(x):
+            return x
+        
+        @staticmethod
+        def backward(x):
+            return np.ones_like(x)
+        
     class ReLU:
         @staticmethod
         def forward(x):
@@ -191,6 +200,17 @@ class LossFunctions:
     @staticmethod
     def cross_entropy_derivative(y_pred, y_true):
         return (y_pred - y_true) / y_true.shape[0]
+
+    # Добавляем MSE loss и его производную
+    @staticmethod
+    def mse(y_pred, y_true):
+        """Вычисляет среднеквадратичную ошибку"""
+        return np.mean((y_pred - y_true) ** 2)
+    
+    @staticmethod
+    def mse_derivative(y_pred, y_true):
+        """Производная MSE по предсказаниям"""
+        return 2 * (y_pred - y_true) / y_true.size
 
 ####################################  END LossFunctions ####################################
 
